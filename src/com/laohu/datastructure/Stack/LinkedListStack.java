@@ -39,6 +39,7 @@ public class LinkedListStack {
             return;
         }
 
+        //压栈就是将新结点替换原来的旧头结点
         newNode.next = this.head;
 
         this.head = newNode;
@@ -56,7 +57,9 @@ public class LinkedListStack {
             throw new IllegalStateException("空栈,弹出数据失败");
         }
 
+        //获取此时头结点的数值
         String val = this.head.val;
+        //将头结点修改为原头结点的next
         this.head = this.head.next;
 
         return val;

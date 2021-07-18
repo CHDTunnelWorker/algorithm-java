@@ -38,6 +38,7 @@ public class ArrayStack {
             throw new ArrayIndexOutOfBoundsException("超出栈大小,压栈失败");
         }
 
+        //向数组尾部添加数据,并移动填充数据index下标
         array[index] = data;
         index++;
     }
@@ -54,8 +55,8 @@ public class ArrayStack {
             throw new ArrayIndexOutOfBoundsException("空栈,弹出数据失败!");
         }
 
+        //将数组尾部数据弹出,并移动需要填充数据的index下标
         index--;
-
         String data = array[index];
         array[index] = null;
 
