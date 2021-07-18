@@ -157,7 +157,7 @@ public class SingleLindedList<T> {
     }
 
     /**
-     * @Description: 检测链表中是否有环(思想:快慢指针法,一个走两步一个走一步,相遇则说明有环)
+     * @Description: 检测链表中是否有环(思想 : 快慢指针法, 一个走两步一个走一步, 相遇则说明有环)
      * @return: boolean true为有环 false为无环
      * @auther: Holland
      * @date: 2021/7/11 6:08 下午
@@ -172,7 +172,7 @@ public class SingleLindedList<T> {
             fast = fast.next.next;
             slow = slow.next;
 
-            if(slow == fast){
+            if (slow == fast) {
                 return true;
             }
         }
@@ -239,14 +239,52 @@ public class SingleLindedList<T> {
     }
 
     /**
-     * @Description: 将两个有序单向链表进行合并,并返回合并后的头结点
+     * @Description: 将两个有序单向链表进行合并, 并返回合并后的头结点
+     * 思想(利用哨兵节点简化代码,两个链表的指针同步启动,比较大小,谁小就将该结点放入哨兵链表后,
+     * 同时哨兵和小方的链表指针进行移动,循环至其中一个链表指针走完结束,后对两个链表指针进行判空,
+     * 将剩余未链接的结点统一接到哨兵链表尾部)
      * @param: SingleNode<T> firstListHead 第一个单向链表的头结点
      * @param: SingleNode<T> secondListHead 第二个单向链表的头结点
      * @return: SingleNode<T> 合并后的头结点
      * @auther: Holland
      * @date: 2021/7/11 6:30 下午
      */
-    public SingleNode<T> mergeTwoSortedLinkedList(SingleNode<T> firstListHead, SingleNode<T> secondListHead){
-        return null;
+    public SingleNode<Integer> mergeTwoSortedLinkedList(SingleNode<Integer> firstListHead, SingleNode<Integer> secondListHead) {
+        //构建哨兵链表
+        SingleNode<Integer> soldier = new SingleNode<>(0, null);
+        //创建哨兵链表的指针
+        SingleNode<Integer> p = soldier;
+
+        //构建两个有序链表的指针
+        SingleNode<Integer> n1 = firstListHead;
+        SingleNode<Integer> n2 = secondListHead;
+
+        //循环比较链表结点大小,并移动对应的指针
+        while (n1 != null && n2 != null) {
+            if (n1.data < n2.data) {
+                p.next = n1;
+                n1 = n1.next;
+            } else {
+                p.next = n2;
+                n2 = n2.next;
+            }
+            //移动哨兵结点指针
+            p = p.next;
+        }
+
+        //循环结束后,为了防止剩余的原链表数据未接入完成,则需将非空指针接入到P结点后
+        if (n1 != null) {
+            p.next = n1;
+        }
+        if (n2 != null) {
+            p.next = n2;
+        }
+
+        //最后返回哨兵节点的next指向的结点
+        return soldier.next;
+    }
+
+    public SingleNode getHead() {
+        return this.head;
     }
 }
